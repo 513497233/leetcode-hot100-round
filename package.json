@@ -1,0 +1,263 @@
+{
+  "name": "leetcode-hot100-round",
+  "displayName": "Hot100 Round",
+  "description": "按轮次刷 LeetCode.cn 热题 100：本地写题、云端测试/提交、统计本轮进度、只从本轮未做的题里随机",
+  "version": "0.3.1",
+  "publisher": "local",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/513497233/leetcode-hot100-round.git"
+  },
+  "homepage": "https://github.com/513497233/leetcode-hot100-round#readme",
+  "bugs": {
+    "url": "https://github.com/513497233/leetcode-hot100-round/issues"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Hot100 Round",
+      "properties": {
+        "hot100.language": {
+          "type": "string",
+          "default": "",
+          "enum": [
+            "",
+            "cpp",
+            "python3",
+            "java",
+            "golang",
+            "javascript",
+            "typescript",
+            "rust",
+            "c",
+            "csharp",
+            "kotlin",
+            "swift"
+          ],
+          "description": "刷题语言，留空则第一次打开题目时询问"
+        },
+        "hot100.problemsDir": {
+          "type": "string",
+          "default": "",
+          "description": "本地题解文件目录（绝对路径），留空则第一次打开题目时询问"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "hot100.setCookie",
+        "title": "Hot100: 绑定 leetcode.cn 账号（Cookie）",
+        "icon": "$(account)"
+      },
+      {
+        "command": "hot100.whoami",
+        "title": "Hot100: 查看绑定状态"
+      },
+      {
+        "command": "hot100.signOut",
+        "title": "Hot100: 解绑账号"
+      },
+      {
+        "command": "hot100.sync",
+        "title": "Hot100: 同步本轮进度",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "hot100.randomPick",
+        "title": "Hot100: 随机一道本轮未做的题",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "hot100.newRound",
+        "title": "Hot100: 开始新一轮",
+        "icon": "$(add)"
+      },
+      {
+        "command": "hot100.setStartAt",
+        "title": "Hot100: 设置本轮开始时间",
+        "icon": "$(calendar)"
+      },
+      {
+        "command": "hot100.showStats",
+        "title": "Hot100: 本轮统计",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "hot100.chooseLanguage",
+        "title": "Hot100: 切换刷题语言"
+      },
+      {
+        "command": "hot100.chooseProblemsDir",
+        "title": "Hot100: 设置题解目录"
+      },
+      {
+        "command": "hot100.test",
+        "title": "Hot100: 云端测试",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "hot100.testCustom",
+        "title": "Hot100: 自定义用例测试"
+      },
+      {
+        "command": "hot100.submit",
+        "title": "Hot100: 提交",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "hot100.showDescription",
+        "title": "Hot100: 查看题面",
+        "icon": "$(book)"
+      },
+      {
+        "command": "hot100.toggleDone",
+        "title": "切换本轮完成状态",
+        "icon": "$(check)"
+      },
+      {
+        "command": "hot100.openInBrowser",
+        "title": "在浏览器打开",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "hot100.openProblem",
+        "title": "打开题目"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "hot100",
+          "title": "Hot100 Round",
+          "icon": "resources/hot100.svg"
+        }
+      ]
+    },
+    "views": {
+      "hot100": [
+        {
+          "id": "hot100.problems",
+          "name": "本轮进度"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "hot100.showStats",
+          "when": "view == hot100.problems",
+          "group": "navigation@0"
+        },
+        {
+          "command": "hot100.randomPick",
+          "when": "view == hot100.problems",
+          "group": "navigation@1"
+        },
+        {
+          "command": "hot100.sync",
+          "when": "view == hot100.problems",
+          "group": "navigation@2"
+        },
+        {
+          "command": "hot100.newRound",
+          "when": "view == hot100.problems",
+          "group": "navigation@3"
+        },
+        {
+          "command": "hot100.setCookie",
+          "when": "view == hot100.problems",
+          "group": "navigation@4"
+        },
+        {
+          "command": "hot100.setStartAt",
+          "when": "view == hot100.problems"
+        },
+        {
+          "command": "hot100.whoami",
+          "when": "view == hot100.problems"
+        },
+        {
+          "command": "hot100.chooseLanguage",
+          "when": "view == hot100.problems"
+        },
+        {
+          "command": "hot100.chooseProblemsDir",
+          "when": "view == hot100.problems"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "hot100.toggleDone",
+          "when": "view == hot100.problems && viewItem == problem",
+          "group": "inline@1"
+        },
+        {
+          "command": "hot100.openInBrowser",
+          "when": "view == hot100.problems && viewItem == problem",
+          "group": "inline@2"
+        },
+        {
+          "command": "hot100.toggleDone",
+          "when": "view == hot100.problems && viewItem == problem"
+        },
+        {
+          "command": "hot100.openInBrowser",
+          "when": "view == hot100.problems && viewItem == problem"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "hot100.test",
+          "when": "resourceFilename =~ /^\\d+\\.[a-z0-9-]+\\.[a-z]+$/",
+          "group": "navigation@1"
+        },
+        {
+          "command": "hot100.submit",
+          "when": "resourceFilename =~ /^\\d+\\.[a-z0-9-]+\\.[a-z]+$/",
+          "group": "navigation@2"
+        },
+        {
+          "command": "hot100.showDescription",
+          "when": "resourceFilename =~ /^\\d+\\.[a-z0-9-]+\\.[a-z]+$/",
+          "group": "navigation@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "hot100.toggleDone",
+          "when": "false"
+        },
+        {
+          "command": "hot100.openInBrowser",
+          "when": "false"
+        },
+        {
+          "command": "hot100.openProblem",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node --test out/test/",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "~1.85.0",
+    "@vscode/vsce": "^3.2.1",
+    "typescript": "^5.6.3"
+  }
+}
